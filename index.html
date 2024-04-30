@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -39,12 +38,6 @@
             padding: 10px 20px;
             font-size: 16px;
         }
-        #restartButton {
-            display: none;
-            margin: 20px auto;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
     </style>
 </head>
 <body>
@@ -80,14 +73,12 @@
 
     <div id="score">Score: 0</div>
     <canvas id="gameCanvas" width="800" height="600"></canvas>
-    <button id="restartButton">Restart Game</button>
 
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const scoreDisplay = document.getElementById("score");
         const startButton = document.getElementById("startButton");
-        const restartButton = document.getElementById("restartButton");
         const gameDetails = document.getElementById("gameDetails");
 
         let score = 0;
@@ -109,7 +100,6 @@
         // Event listener for mouse movement
         canvas.addEventListener("mousemove", mouseMoveHandler, false);
         startButton.addEventListener("click", startGame);
-        restartButton.addEventListener("click", restartGame);
 
         function mouseMoveHandler(event) {
             const relativeX = event.clientX - canvas.offsetLeft;
@@ -175,7 +165,6 @@
             if (!gameStarted) {
                 gameStarted = true;
                 startButton.style.display = "none";
-                restartButton.style.display = "block";
                 canvas.style.display = "block";
                 gameDetails.style.display = "none";
                 scoreDisplay.style.display = "block"; // Display score when game starts
@@ -186,8 +175,8 @@
         function endGame() {
             cancelAnimationFrame(animationId);
             alert("Game Over! Score: " + score);
-            restartButton.style.display = "block"; // Show restart button
             gameStarted = false;
+            restartGame();
         }
 
         function restartGame() {
@@ -199,7 +188,6 @@
             ballSpeedX = 5;
             ballSpeedY = -5;
             scoreDisplay.textContent = "Score: " + score;
-            restartButton.style.display = "none"; // Hide restart button
             startGame(); // Start the game again
         }
     </script>
