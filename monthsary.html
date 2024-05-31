@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 23rd Monthsary!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #ffe4e1, #ffc0cb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        h1 {
+            color: #ff69b4;
+            font-size: 2.5em;
+            animation: fadeIn 2s;
+        }
+        p {
+            color: #ff1493;
+            font-size: 1.2em;
+            animation: fadeIn 3s;
+        }
+        .heart {
+            color: red;
+            font-size: 50px;
+            animation: beat 1s infinite alternate;
+        }
+        @keyframes beat {
+            to {
+                transform: scale(1.2);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .hidden-message {
+            display: none;
+            margin-top: 20px;
+            color: #ff1493;
+            font-size: 1.1em;
+        }
+        .reveal-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff69b4;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            animation: fadeIn 4s;
+        }
+        .reveal-button:hover {
+            background-color: #ff1493;
+        }
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Happy 23rd Monthsary!</h1>
+        <p>23 months of love, laughter, and joy!<br>
+        Every moment with you is a treasure. I love you more than words can say.</p>
+        <div class="heart">❤️</div>
+        <button class="reveal-button" onclick="revealMessage()">Click me for a surprise!</button>
+        <div class="hidden-message">You make my heart skip a beat! I am so grateful for every moment we share. ❤️</div>
+        <canvas class="confetti"></canvas>
+    </div>
+
+    <script>
+        function revealMessage() {
+            var message = document.querySelector('.hidden-message');
+            var heart = document.querySelector('.heart');
+            var button = document.querySelector('.reveal-button');
+            if (message.style.display === 'none') {
+                message.style.display = 'block';
+                heart.style.animation = 'beat 0.5s infinite alternate';
+                button.style.display = 'none';
+                startConfetti();
+            } else {
+                message.style.display = 'none';
+                heart.style.animation = 'beat 1s infinite alternate';
+            }
+        }
+
+        function startConfetti() {
+            var confettiCanvas = document.querySelector('.confetti');
+            var ctx = confettiCanvas.getContext('2d');
+            var particles = [];
+            var particleCount = 100;
+            var colors = ['#ff69b4', '#ff1493', '#ff69b4', '#ff1493'];
+
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+
+            function createParticle() {
+                var x = Math.random() * confettiCanvas.width;
+                var y = Math.random() * confettiCanvas.height - confettiCanvas.height;
+                var size = Math.random() * 10;
+                var speed = Math.random() * 3 + 2;
+                var color = colors[Math.floor(Math.random() * colors.length)];
+
+                particles.push({ x, y, size, speed, color });
+            }
+
+            function updateParticles() {
+                ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+                particles.forEach((particle, index) => {
+                    particle.y += particle.speed;
+                    if (particle.y > confettiCanvas.height) {
+                        particles.splice(index, 1);
+                    } else {
+                        ctx.beginPath();
+                        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                        ctx.fillStyle = particle.color;
+                        ctx.fill();
+                    }
+                });
+
+                while (particles.length < particleCount) {
+                    createParticle();
+                }
+
+                requestAnimationFrame(updateParticles);
+            }
+
+            updateParticles();
+        }
+    </script>
+</body>
+</html>
