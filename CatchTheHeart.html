@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch the Heart</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #ffe4e1, #ffc0cb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .game-container {
+            position: relative;
+            width: 80%;
+            height: 80%;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .heart {
+            position: absolute;
+            font-size: 50px;
+            color: red;
+            cursor: pointer;
+            animation: beat 1s infinite alternate;
+        }
+        @keyframes beat {
+            to {
+                transform: scale(1.2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="heart" onclick="catchHeart()">❤️</div>
+    </div>
+
+    <script>
+        var heart = document.querySelector('.heart');
+
+        function getRandomPosition(element) {
+            var x = document.querySelector('.game-container').offsetHeight - element.clientHeight;
+            var y = document.querySelector('.game-container').offsetWidth - element.clientWidth;
+            var randomX = Math.floor(Math.random() * x);
+            var randomY = Math.floor(Math.random() * y);
+            return [randomX, randomY];
+        }
+
+        function moveHeart() {
+            var xy = getRandomPosition(heart);
+            heart.style.top = xy[0] + 'px';
+            heart.style.left = xy[1] + 'px';
+        }
+
+        function catchHeart() {
+            alert('You caught the heart!');
+            window.location.href = 'monthsary.html';
+        }
+
+        setInterval(moveHeart, 1000);
+    </script>
+</body>
+</html>
